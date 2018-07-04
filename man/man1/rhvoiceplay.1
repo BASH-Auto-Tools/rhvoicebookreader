@@ -1,0 +1,24 @@
+.TH "RHVoicePlay" 0.20180704 "04 Jul 2018" "User documentation"
+.SH NAME
+rhvoiceplay
+.SH DESCRIPTION
+SH script book reader of RHVoice speech synthesizer.
+.SH SYNOPSIS
+rhvoiceplay [options] book.txt|-|string
+.SH OPTIONS
+.TP
+-l N
+line begin [N=0-100] (only .txt, default = 0)
+.TP
+-s str
+RHVoice speaker (RHVoice >=0.5, default = aleksandr)
+.TP
+-h
+help
+.SH EXAMPLES
+rhvoiceplay -s elena book.txt.gz
+.SH COPYRIGHT
+(c) 2018 zvezdochiot.
+ All rights reserved.
+.SH "SEE ALSO"
+ speech-dispatcher
