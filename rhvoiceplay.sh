@@ -3,7 +3,7 @@
 #Depends: dash, sed, gzip | zutils, rhvoice, aplay | sox
 
 sname="RHVoicePlay"
-sversion="0.20180706"
+sversion="0.20190517"
 
 echo "$sname $sversion" >&2
 
@@ -13,7 +13,7 @@ tcomp="sed"
 tcomp="zcat"
 [ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
 tcomp="RHVoice"
-tcompa="RHVoice-client"
+tcompa="RHVoice-test"
 [ ! "$(command -v $tcomp)" -a ! "$(command -v $tcompa)" ] && tnocomp="$tnocomp $tcomp|$tcompa"
 tcomp="aplay"
 tcompa="play"
@@ -57,7 +57,7 @@ then
 fi
 
 trhvoice="RHVoice"
-[ ! "$(command -v $trhvoice)" ] && trhvoice="RHVoice-client -s $tspeaker"
+[ ! "$(command -v $trhvoice)" ] && trhvoice="RHVoice-test -p $tspeaker"
 tplay="aplay"
 [ ! "$(command -v $tplay)" ] && tplay="play -q"
 
@@ -67,11 +67,11 @@ then
     echo "$text: $textsize" >&2
     tln=$(($tln*$textsize/100))
     i=$tln
-    zcat "$text" | sed -e 's/[\.\?\!\…] /&\n/g' | sed -e '/^$/d' | sed -e "1,${tln}d" | while read tline; do p=$((10000*$i/$textsize)); p1=$(($p/100)); p2=$(($p-$p1*100)); printf "%02d.%02d: " $p1 $p2; echo "$tline"; echo "$tline" | $trhvoice | $tplay - 2>/dev/null; i=$(($i+1)); done
+    zcat "$text" | sed -e 's/[\.\?\!\…] /&\n/g' | sed -e '/^$/d' | sed -e "1,${tln}d" | while read tline; do p=$((10000*$i/$textsize)); p1=$(($p/100)); p2=$(($p-$p1*100)); printf "%02d.%02d: " $p1 $p2; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null; i=$(($i+1)); done
 elif [ "x$text" = "x-" ]
 then
-    while read tline; do printf ": "; echo "$tline"; echo "$tline" | $trhvoice | $tplay - 2>/dev/null; done
+    while read tline; do printf ": "; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null; done
 else
     echo "$text"
-    echo "$text" | $trhvoice | $tplay - 2>/dev/null
+    echo "$text" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null
 fi
