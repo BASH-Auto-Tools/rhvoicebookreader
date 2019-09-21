@@ -1,4 +1,4 @@
-.TH "RHVoicePlay" 0.20180704 "04 Jul 2018" "User documentation"
+.TH "RHVoicePlay" 0.20190921 "21 Aug 2019" "User documentation"
 .SH NAME
 rhvoiceplay
 .SH DESCRIPTION
@@ -8,17 +8,17 @@ rhvoiceplay [options] book.txt|-|string
 .SH OPTIONS
 .TP
 -l N
-line begin [N=0-100] (only .txt, default = 0)
+line begin [N=0-1000] (only .txt, default = 0)
 .TP
 -s str
-RHVoice speaker (RHVoice >=0.5, default = aleksandr)
+RHVoice speaker (RHVoice >=0.5, default = elena)
 .TP
 -h
 help
 .SH EXAMPLES
-rhvoiceplay -s elena book.txt.gz
+rhvoiceplay book.txt.gz
 .SH COPYRIGHT
-(c) 2018 zvezdochiot.
- All rights reserved.
+Public Domain Mark 1.0
+ No Copyright
 .SH "SEE ALSO"
  speech-dispatcher

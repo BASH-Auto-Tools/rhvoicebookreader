@@ -1,5 +1,5 @@
 RHVoiceBookReader
-0.20180630
+0.20190921
 
 # RHVoiceBookReader
 
@@ -48,6 +48,6 @@ all:
 * [license-lgpl_3.0-20171206_all.deb](https://sourceforge.net/projects/debiannoofficial/files/wheezy-update/doc/license-lgpl_3.0-20171206_all.deb)
 
 ---  
-2018  
+2019  
 zvezdochiot
 
