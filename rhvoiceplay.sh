@@ -57,7 +57,7 @@ then
 fi
 
 trhvoice="RHVoice"
-[ ! "$(command -v $trhvoice)" ] && trhvoice="RHVoice-test -p $tspeaker"
+[ ! "$(command -v $trhvoice)" ] && trhvoice="RHVoice-test -p $tspeaker -o -"
 tplay="aplay"
 [ ! "$(command -v $tplay)" ] && tplay="play -q"
 

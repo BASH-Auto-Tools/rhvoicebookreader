@@ -1,5 +1,5 @@
 RHVoiceBookReader
-0.20190921
+0.20190922
 
 # RHVoiceBookReader
 

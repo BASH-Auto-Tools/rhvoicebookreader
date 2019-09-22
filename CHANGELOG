@@ -1,3 +1,7 @@
+0.20190922
+
+    Fixed pipe.
+
 0.20190921
 
     Fix #1 and #2: zcat -> gzip -dcf
