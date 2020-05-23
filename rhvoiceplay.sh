@@ -3,27 +3,30 @@
 #Depends: bash, sed, gzip, rhvoice, aplay | sox
 
 sname="RHVoicePlay"
-sversion="0.20190921"
+sversion="0.20200523"
 
 echo "$sname $sversion" >&2
 
 tnocomp=""
 tcomp="sed"
-[ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
+[ ! "$(which $tcomp)" ] && tnocomp="$tnocomp $tcomp"
 tcomp="gzip"
-[ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
+[ ! "$(which $tcomp)" ] && tnocomp="$tnocomp $tcomp"
 tcomp="RHVoice"
 tcompa="RHVoice-test"
-[ ! "$(command -v $tcomp)" -a ! "$(command -v $tcompa)" ] && tnocomp="$tnocomp $tcomp|$tcompa"
+[ ! "$(which $tcomp)" -a ! "$(which $tcompa)" ] && tnocomp="$tnocomp $tcomp|$tcompa"
 tcomp="aplay"
 tcompa="play"
-[ ! "$(command -v $tcomp)" -a ! "$(command -v $tcompa)" ] && tnocomp="$tnocomp $tcomp|$tcompa"
+[ ! "$(which $tcomp)" -a ! "$(which $tcompa)" ] && tnocomp="$tnocomp $tcomp|$tcompa"
 if [ "x$tnocomp" != "x" ]
 then
     echo "Not found:${tnocomp}!" >&2
     echo "" >&2
     exit 1
 fi
+
+tstdout="/dev/stdout"
+tstdin="/dev/stdin"
 
 tln=0
 tspeaker="elena"
@@ -57,9 +60,9 @@ then
 fi
 
 trhvoice="RHVoice"
-[ ! "$(command -v $trhvoice)" ] && trhvoice="RHVoice-test -p $tspeaker -o -"
-tplay="aplay"
-[ ! "$(command -v $tplay)" ] && tplay="play -q"
+[ ! "$(which $trhvoice)" ] && trhvoice="RHVoice-test -p $tspeaker -o $tstdout"
+tplay="aplay $tstdin"
+[ ! "$(which $tplay)" ] && tplay="play -q $tstdin"
 
 if [ -f "$text" ]
 then
@@ -67,11 +70,11 @@ then
     echo "$text: $textsize" >&2
     tln=$(($tln*$textsize/1000))
     i=$tln
-    gzip -dcf "$text" | sed -e 's/[\.\?\!\…] /&\n/g' | sed -e '/^$/d' | sed -e "1,${tln}d" | while read tline; do p=$((10000*$i/$textsize)); p1=$(($p/10)); p2=$(($p-$p1*10)); printf "%03d.%01d: " $p1 $p2; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null; i=$(($i+1)); done
+    gzip -dcf "$text" | sed -e 's/[\.\?\!\…] /&\n/g' | sed -e '/^$/d' | sed -e "1,${tln}d" | while read tline; do p=$((10000*$i/$textsize)); p1=$(($p/10)); p2=$(($p-$p1*10)); printf "%03d.%01d: " $p1 $p2; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay 2>/dev/null; i=$(($i+1)); done
 elif [ "x$text" = "x-" ]
 then
-    while read tline; do printf ": "; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null; done
+    while read tline; do printf ": "; echo "$tline"; echo "$tline" | $trhvoice 2>/dev/null | $tplay 2>/dev/null; done
 else
     echo "$text"
-    echo "$text" | $trhvoice 2>/dev/null | $tplay - 2>/dev/null
+    echo "$text" | $trhvoice 2>/dev/null | $tplay 2>/dev/null
 fi

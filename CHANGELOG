@@ -1,3 +1,9 @@
+https://github.com/BASH-Auto-Tools/rhvoicebookreader
+
+0.20200523
+
+    Fixed dev (stdin/stdout).
+
 0.20190922
 
     Fixed pipe.
